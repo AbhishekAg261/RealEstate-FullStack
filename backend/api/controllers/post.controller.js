@@ -6,7 +6,7 @@ const getPosts = async (req, res) => {
     return res.status(200).json(posts);
   } catch (err) {
     console.log(err);
-    return res.staus(500).json({ message: "failed to get response" });
+    return res.status(500).json({ message: "failed to get response" });
   }
 };
 const getPost = async (req, res) => {
@@ -14,11 +14,15 @@ const getPost = async (req, res) => {
   try {
     const post = await Post.findOne({
       _id: id,
+    }).populate({
+      path: "userId",
+      model: "USER",
+      select: { username: true, avatar: true },
     });
     return res.status(500).json(post);
   } catch (err) {
     console.log(err);
-    return res.staus(500).json({ message: "failed to get response" });
+    return res.status(500).json({ message: "failed to get response" });
   }
 };
 const addPost = async (req, res) => {
@@ -26,13 +30,14 @@ const addPost = async (req, res) => {
   const tokenUserId = req.userId;
   try {
     const newPost = await Post.create({
-      ...body,
+      ...body.postData,
       userId: tokenUserId,
+      postDetail: body.postDetail,
     });
     return res.status(200).json(newPost);
   } catch (err) {
     console.log(err);
-    return res.staus(500).json({ message: "failed to get response" });
+    return res.status(500).json({ message: "failed to get response" });
   }
 };
 const updatePost = async (req, res) => {
@@ -40,7 +45,9 @@ const updatePost = async (req, res) => {
     return res.status(200).json({});
   } catch (err) {
     console.log(err);
-    return res.staus(500).json({ message: "failed to test1 test2 get response" });
+    return res
+      .status(500)
+      .json({ message: "failed to test1 test2 get response" });
   }
 };
 const deletePost = async (req, res) => {

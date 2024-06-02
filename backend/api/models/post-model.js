@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const PostDetail = require("./post-details");
 
 const postSchema = new mongoose.Schema({
   title: {
@@ -7,9 +8,11 @@ const postSchema = new mongoose.Schema({
   price: {
     type: Number,
   },
-  img: {
-    type: String,
-  },
+  images: [
+    {
+      type: String,
+    },
+  ],
   address: {
     type: String,
   },
@@ -43,8 +46,8 @@ const postSchema = new mongoose.Schema({
   userId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
-    required: true,
   },
+  postDetail: {},
 });
 
 const Post = new mongoose.model("POST", postSchema);
