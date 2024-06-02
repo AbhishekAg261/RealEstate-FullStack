@@ -55,7 +55,8 @@ const NewPostPage = () => {
         },
         config
       );
-      navigate("/" + response.data._id);
+      console.log(response.data);
+      navigate("/single/" + response.data._id);
     } catch (err) {
       setError(error);
     }

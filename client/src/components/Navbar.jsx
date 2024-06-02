@@ -11,10 +11,10 @@ const Navbar = () => {
       <nav className="nav">
         <div className="left">
           <Link className="logo" to="/">
-            <img src="/logo final.png" alt="logo" />
+            <img src="/logoNew.png" alt="logo" />
             <span>Home Heaven</span>
           </Link>
-          <a href="">Home</a>
+          <Link to="/">Home</Link>
           <a href="">About</a>
           <a href="">Contact</a>
           <a href="">Agents</a>
@@ -22,7 +22,9 @@ const Navbar = () => {
         <div className="right">
           {currentUser ? (
             <div className="user">
-              <img src={currentUser.avatar || "./noavatar.jpg"} alt="" />
+              <Link to="/profile">
+                <img src={currentUser.avatar || "./noavatar.jpg"} alt="" />
+              </Link>
               <span>{currentUser.username}</span>
               <Link to="/profile" className="profile">
                 <div className="notification">3</div>
@@ -41,12 +43,12 @@ const Navbar = () => {
             <img src="/menu.png" alt="" />
           </div>
           <div className={open ? "menu active" : "menu"}>
-            <a href="">Home</a>
+            <Link to="/">Home</Link>
             <a href="">About</a>
             <a href="">Contact</a>
             <a href="">Agents</a>
-            <a href="">Sign In</a>
-            <a href="">Sign Up</a>
+            <Link to="/login">Sign In</Link>
+            <Link to="/register">Sign Up</Link>
           </div>
         </div>
       </nav>
