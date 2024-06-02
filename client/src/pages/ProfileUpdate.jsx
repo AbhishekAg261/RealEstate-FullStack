@@ -8,32 +8,14 @@ import UploadWidget from "../components/UploadWidget";
 const ProfileUpdate = () => {
   const [error, setError] = useState("");
   const { currentUser, updateUser } = useContext(AuthContext);
-  const [newAvatar, setNewAvatar] = useState(currentUser.avatar);
+  const [avatar, setAvatar] = useState([]);
   const navigate = useNavigate();
 
-  const defaultProfile = {
-    username: currentUser.username,
-    email: currentUser.email,
-    password: "",
-    avatar: currentUser.avatar,
-  };
-
-  const [profile, setProfile] = useState(defaultProfile);
-
-  const handleInput = (e) => {
-    const name = e.target.name;
-    const value = e.target.value;
-
-    setProfile({
-      ...profile,
-      [name]: value,
-    });
-  };
-
   const handleSubmit = async (e) => {
-    const { username, email, password, avatar } = profile;
     e.preventDefault();
-    setError("");
+    const formData = new FormData(e.target);
+    const inputs = Object.fromEntries(formData);
+
     const config = {
       headers: {
         "Content-Type": "application/json",
@@ -44,16 +26,15 @@ const ProfileUpdate = () => {
       const response = await axios.put(
         `http://localhost:8800/api/users/${currentUser._id}`,
         {
-          username,
-          email,
-          password,
-          avatar: newAvatar,
+          username: inputs.username,
+          email: inputs.email,
+          password: inputs.password,
+          avatar: avatar[0],
         },
         config
       );
 
       updateUser(response.data);
-      setProfile(defaultProfile);
       navigate("/profile");
     } catch (err) {
       setError(err.response.data.message);
@@ -68,8 +49,7 @@ const ProfileUpdate = () => {
           <div className="item">
             <label htmlFor="username">Username</label>
             <input
-              value={profile.username}
-              onChange={handleInput}
+              defaultValue={currentUser.username}
               id="username"
               name="username"
               type="text"
@@ -78,8 +58,7 @@ const ProfileUpdate = () => {
           <div className="item">
             <label htmlFor="email">Email</label>
             <input
-              value={profile.email}
-              onChange={handleInput}
+              defaultValue={currentUser.email}
               id="email"
               name="email"
               type="email"
@@ -88,8 +67,7 @@ const ProfileUpdate = () => {
           <div className="item">
             <label htmlFor="password">Password</label>
             <input
-              value={profile.password}
-              onChange={handleInput}
+              defaultValue={currentUser.password}
               id="password"
               name="password"
               type="password"
@@ -100,7 +78,11 @@ const ProfileUpdate = () => {
         </form>
       </div>
       <div className="sideContainer">
-        <img src={newAvatar || "/noavatar.jpg"} alt="" className="avatar" />
+        <img
+          src={avatar[0] || currentUser.avatar || "/noavatar.jpg"}
+          alt=""
+          className="avatar"
+        />
         <UploadWidget
           uwConfig={{
             cloudName: "djull9qud",
@@ -109,7 +91,7 @@ const ProfileUpdate = () => {
             maxImageFileSize: 2000000,
             folder: "avatars",
           }}
-          setNewAvatar={setNewAvatar}
+          setState={setAvatar}
         />
       </div>
     </div>

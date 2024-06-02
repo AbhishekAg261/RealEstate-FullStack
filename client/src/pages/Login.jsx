@@ -31,7 +31,6 @@ const Login = () => {
   };
 
   const handleSubmit = async (e) => {
-    const { username, password } = login;
     e.preventDefault();
     setLoading(true);
     setError("");
@@ -45,8 +44,7 @@ const Login = () => {
       const response = await axios.post(
         "http://localhost:8800/api/auth/login",
         {
-          username,
-          password,
+          ...login,
         },
         config
       );
@@ -66,7 +64,7 @@ const Login = () => {
     <div className="registerPage">
       <div className="formContainer">
         <form onSubmit={handleSubmit}>
-          <h1>Create an Account</h1>
+          <h1>Login</h1>
           <input
             required
             minLength={3}

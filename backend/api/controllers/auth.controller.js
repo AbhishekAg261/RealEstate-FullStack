@@ -23,7 +23,7 @@ const register = async (req, res) => {
       username,
       email,
       password: hashedPassword,
-      avatar: "https://avatar.iran.liara.run/public/boy?username=Ash",
+      avatar: "",
       createdAt: date,
     });
 

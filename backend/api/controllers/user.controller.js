@@ -49,7 +49,6 @@ const updateuser = async (req, res) => {
     const updatedUser = await User.findByIdAndUpdate(id, inputs, {
       new: true,
     }).lean();
-    console.log(updateuser);
     if (!updatedUser) {
       return res.status(404).json({ message: "User not found!" });
     }

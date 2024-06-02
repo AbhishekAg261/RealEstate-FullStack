@@ -28,7 +28,6 @@ const Register = () => {
   };
 
   const handleSubmit = async (e) => {
-    const { username, email, password } = register;
     e.preventDefault();
     setLoading(true);
     setError("");
@@ -36,9 +35,7 @@ const Register = () => {
       const response = await axios.post(
         "http://localhost:8800/api/auth/register",
         {
-          username,
-          email,
-          password,
+          ...register,
         }
       );
       if (response) {
