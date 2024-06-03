@@ -39,13 +39,14 @@
 
 .newPostPage .formContainer .wrapper form .description {
     width: 100%;
-    height: 320px;
+    height: 200px;
 }
 
-.newPostPage .formContainer .wrapper form .description .quill>.ql-container>.ql-editor {
-    height: 200px;
-    font-size: 16px;
+.newPostPage .formContainer .wrapper form .description textarea {
+    height: 100%;
 }
+
+
 
 .newPostPage .formContainer .wrapper .addButton {
     width: 30%;

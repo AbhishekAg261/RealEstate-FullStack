@@ -19,7 +19,7 @@ const getPost = async (req, res) => {
       model: "USER",
       select: { username: true, avatar: true },
     });
-    return res.status(500).json(post);
+    return res.status(200).json(post);
   } catch (err) {
     console.log(err);
     return res.status(500).json({ message: "failed to get response" });

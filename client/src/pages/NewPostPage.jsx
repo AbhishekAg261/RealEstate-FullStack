@@ -1,17 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import "../stylesheet/NewPostPage.css";
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css";
 import UploadWidget from "../components/UploadWidget";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
+import { AuthContext } from "../store/AuthContext";
+
 const NewPostPage = () => {
-  const [value, setValue] = useState("");
   const [images, setImages] = useState([]);
   const [error, setError] = useState("");
+  const [desc, setDesc] = useState("");
+  const { setUserPost } = useContext(AuthContext);
 
   const navigate = useNavigate();
+
+  const handleChange = (e) => {
+    setDesc(e.target.value);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -43,7 +48,7 @@ const NewPostPage = () => {
             images: images,
           },
           postDetail: {
-            desc: value,
+            desc: desc,
             utilities: inputs.utilities,
             pet: inputs.pet,
             income: inputs.income,
@@ -55,7 +60,7 @@ const NewPostPage = () => {
         },
         config
       );
-      console.log(response.data);
+      setUserPost(response.data);
       navigate("/single/" + response.data._id);
     } catch (err) {
       setError(error);
@@ -82,7 +87,14 @@ const NewPostPage = () => {
             </div>
             <div className="item description">
               <label htmlFor="desc">Description</label>
-              <ReactQuill theme="snow" onChange={setValue} value={value} />
+              <textarea
+                name="desc"
+                id="desc"
+                value={desc}
+                onChange={handleChange}
+              >
+                Add Description....
+              </textarea>
             </div>
             <div className="item">
               <label htmlFor="city">City</label>
