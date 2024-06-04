@@ -6,10 +6,15 @@ export const AuthContextProvider = ({ children }) => {
   const storageData = JSON.parse(localStorage.getItem("user")) || null;
   const [currentUser, setCurrentUser] = useState(storageData);
 
-  const [userPost, setUserPost] = useState({});
+  const [filterData, setFilterData] = useState();
 
   const updateUser = (data) => {
     setCurrentUser(data);
+  };
+
+  const updateFilterData = (data) => {
+    // console.log("test final");
+    setFilterData(data);
   };
 
   useEffect(() => {
@@ -17,9 +22,7 @@ export const AuthContextProvider = ({ children }) => {
   }, [currentUser]);
 
   return (
-    <AuthContext.Provider
-      value={{ currentUser, updateUser, userPost, setUserPost }}
-    >
+    <AuthContext.Provider value={{ currentUser, updateUser, updateFilterData }}>
       {children}
     </AuthContext.Provider>
   );

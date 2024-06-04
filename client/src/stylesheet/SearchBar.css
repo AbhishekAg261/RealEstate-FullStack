@@ -36,13 +36,12 @@
     width: 200px;
 }
 
-.searchBar form button {
-    border: none;
-    cursor: pointer;
-    background-color: #fece51;
+.searchBar form a {
     flex: 1;
-    font-size: 30px;
-    color: white;
+    background-color: #fece51;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 @media (max-width: 1366px) {

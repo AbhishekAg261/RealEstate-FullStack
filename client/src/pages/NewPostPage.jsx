@@ -41,7 +41,7 @@ const NewPostPage = () => {
             city: inputs.city,
             bedroom: parseInt(inputs.bedroom),
             bathroom: parseInt(inputs.bathroom),
-            type: inputs.type,
+            mode: inputs.mode,
             property: inputs.property,
             latitude: inputs.latitude,
             longitude: inputs.longitude,
@@ -60,7 +60,6 @@ const NewPostPage = () => {
         },
         config
       );
-      setUserPost(response.data);
       navigate("/single/" + response.data._id);
     } catch (err) {
       setError(error);
@@ -117,8 +116,8 @@ const NewPostPage = () => {
               <input id="longitude" name="longitude" type="text" />
             </div>
             <div className="item">
-              <label htmlFor="type">Type</label>
-              <select name="type">
+              <label htmlFor="mode">Type</label>
+              <select name="mode">
                 <option value="rent" defaultChecked>
                   Rent
                 </option>

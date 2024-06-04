@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "../stylesheet/SinglePage.css";
 import Slider from "../components/Slider";
-import { singlePostData, userData } from "../data/dummyList";
 import Map from "../components/Map";
 import { useParams } from "react-router-dom";
 import axios from "axios";
@@ -145,7 +144,7 @@ const SinglePage = () => {
           </div>
         </>
       ) : (
-        <h1>Unable to Post</h1>
+        <h1>Posting...</h1>
       )}
     </div>
   );

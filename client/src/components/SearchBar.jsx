@@ -1,7 +1,8 @@
 import "../stylesheet/SearchBar.css";
-
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { CiSearch } from "react-icons/ci";
+import { AuthContext } from "../store/AuthContext";
+import { useNavigate, Link } from "react-router-dom";
 
 const types = ["buy", "rent"];
 
@@ -13,12 +14,25 @@ const SearchBar = () => {
     maxPrice: 0,
   });
 
+  const { List, setList } = useContext(AuthContext);
+  const Navigate = useNavigate();
+
   const switchType = (val) => {
     setQuery((prev) => ({
       ...prev,
       type: val,
     }));
   };
+
+  const handleChange = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
+    setQuery({
+      ...query,
+      [name]: value,
+    });
+  };
+
   return (
     <div className="searchBar">
       <div className="type">
@@ -35,13 +49,19 @@ const SearchBar = () => {
         })}
       </div>
       <form action="">
-        <input type="text" name="location" placeholder="City Location" />
+        <input
+          onChange={handleChange}
+          type="text"
+          name="location"
+          placeholder="City Location"
+        />
         <input
           type="number"
           name="minPrice"
           min={0}
           max={1000000}
           placeholder="Min Price"
+          onChange={handleChange}
         />
         <input
           type="number"
@@ -49,10 +69,13 @@ const SearchBar = () => {
           min={0}
           max={1000000}
           placeholder="Max Price"
+          onChange={handleChange}
         />
-        <button>
-          <CiSearch />
-        </button>
+        <Link
+          to={`/list?mode=${query.type}&city=${query.location}&minPrice=${query.minPirce}&maxPrice=${query.maxPrice}`}
+        >
+          <img src="/search.png" alt="" />
+        </Link>
       </form>
     </div>
   );
