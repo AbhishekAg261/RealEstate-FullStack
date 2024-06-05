@@ -7,12 +7,12 @@ import axios from "axios";
 const Filter = ({ handleFilterData }) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [query, setQuery] = useState({
-    type: searchParams.get("type"),
-    city: searchParams.get("city"),
-    property: searchParams.get("property"),
-    minPrice: searchParams.get("minPrice"),
-    maxPrice: searchParams.get("maxPrice"),
-    bedroom: searchParams.get("bedroom"),
+    mode: searchParams.get("mode") || "",
+    city: searchParams.get("city") || "",
+    property: searchParams.get("property") || "",
+    minPrice: searchParams.get("minPrice") || 0,
+    maxPrice: searchParams.get("maxPrice") || 100000,
+    bedroom: searchParams.get("bedroom") || "",
   });
 
   const handleChange = (e) => {
@@ -30,7 +30,7 @@ const Filter = ({ handleFilterData }) => {
     try {
       const response = await axios.get("http://localhost:8800/api/posts", {
         params: {
-          type: query.type,
+          mode: query.mode,
           city: query.city,
           property: query.property,
           minPrice: query.minPrice,
@@ -75,12 +75,12 @@ const Filter = ({ handleFilterData }) => {
       </div>
       <div className="bottom">
         <div className="item">
-          <label htmlFor="type">Type</label>
+          <label htmlFor="mode">Mode</label>
           <select
-            defaultValue={query.type}
+            defaultValue={query.mode}
             onChange={handleChange}
-            name="type"
-            id="type"
+            name="mode"
+            id="mode"
           >
             <option value="">any</option>
             <option value="buy">Buy</option>

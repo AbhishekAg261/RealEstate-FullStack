@@ -21,7 +21,7 @@ const ListPage = () => {
             <div className="wrapper">
               <Filter handleFilterData={handleFilterData} />
               {filterData.map((item, index) => {
-                return <Card key={item.id} item={item} />;
+                return <Card key={item._id} item={item} />;
               })}
             </div>
           </div>

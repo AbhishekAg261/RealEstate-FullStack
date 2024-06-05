@@ -1,20 +1,53 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import "../stylesheet/SinglePage.css";
 import Slider from "../components/Slider";
 import Map from "../components/Map";
-import { useParams } from "react-router-dom";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
+import { AuthContext } from "../store/AuthContext";
 
 const SinglePage = () => {
   const { id } = useParams();
   const [error, setError] = useState();
   const [singleData, setSingleData] = useState(null);
+  const [saved, setSaved] = useState("");
+
+  const { currentUser } = useContext(AuthContext);
+  const Navigate = useNavigate();
+
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+    withCredentials: true,
+  };
 
   const fetchPostDetails = async () => {
     try {
       const response = await axios.get(`http://localhost:8800/api/posts/${id}`);
       setSingleData(response.data);
+      setSaved(response.data.isSaved);
     } catch (error) {
+      setError(error);
+    }
+  };
+
+  const handleSave = async () => {
+    setSaved(!saved);
+    if (!currentUser) {
+      Navigate("/login");
+    }
+    try {
+      const response = await axios.post(
+        "http://localhost:8800/api/users/save",
+        {
+          postId: singleData._id,
+        },
+        config
+      );
+    } catch (err) {
+      setSaved(!saved);
+      console.log(err);
       setError(error);
     }
   };
@@ -41,11 +74,22 @@ const SinglePage = () => {
                     <div className="price">$ {singleData.price}</div>
                   </div>
                   <div className="user">
-                    <img src={singleData.userId.avatar} alt="" />
-                    <span>{singleData.userId.username}</span>
+                    <img
+                      src={
+                        singleData.userId.avatar ? singleData.userId.avatar : ""
+                      }
+                      alt=""
+                    />
+                    <span>
+                      {singleData.userId.username
+                        ? singleData.userId.username
+                        : ""}
+                    </span>
                   </div>
                 </div>
-                <div className="bottom">{singleData.postDetail.desc}</div>
+                <div className="bottom">
+                  {singleData.postDetail.desc ? singleData.postDetail.desc : ""}
+                </div>
               </div>
             </div>
           </div>
@@ -135,9 +179,12 @@ const SinglePage = () => {
                   <img src="/chat.png" alt="" />
                   Send a Message
                 </button>
-                <button>
+                <button
+                  onClick={handleSave}
+                  style={{ backgroundColor: saved ? "#fece51" : "white" }}
+                >
                   <img src="/save.png" alt="" />
-                  Save the Place
+                  {saved ? "Place Saved" : "Save the Place"}
                 </button>
               </div>
             </div>

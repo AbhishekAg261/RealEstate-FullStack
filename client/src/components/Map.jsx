@@ -5,8 +5,6 @@ import "leaflet/dist/leaflet.css";
 import Pin from "../components/Pin";
 
 const Map = ({ items }) => {
-  console.log("inside maps");
-  console.log(items);
   return (
     <MapContainer
       center={
@@ -23,7 +21,7 @@ const Map = ({ items }) => {
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
       {items.map((item) => (
-        <Pin item={item} key={item.id} />
+        <Pin item={item} key={item._id} />
       ))}
     </MapContainer>
   );

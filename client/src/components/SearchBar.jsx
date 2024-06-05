@@ -1,8 +1,6 @@
 import "../stylesheet/SearchBar.css";
-import React, { useState, useContext } from "react";
-import { CiSearch } from "react-icons/ci";
-import { AuthContext } from "../store/AuthContext";
-import { useNavigate, Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 const types = ["buy", "rent"];
 
@@ -11,11 +9,8 @@ const SearchBar = () => {
     type: "buy",
     location: "",
     minPirce: 0,
-    maxPrice: 0,
+    maxPrice: 100000,
   });
-
-  const { List, setList } = useContext(AuthContext);
-  const Navigate = useNavigate();
 
   const switchType = (val) => {
     setQuery((prev) => ({

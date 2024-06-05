@@ -7,9 +7,6 @@ import { AuthContext } from "../store/AuthContext";
 
 const List = () => {
   const data = listData;
-  const { filterData } = useContext(AuthContext);
-  console.log(filterData);
-
   return (
     <div className="list">
       {listData.map((item, index) => (
