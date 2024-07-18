@@ -5,12 +5,11 @@ import { listData } from "../data/dummyList";
 import "../stylesheet/List.css";
 import { AuthContext } from "../store/AuthContext";
 
-const List = () => {
-  const data = listData;
+const List = ({ posts }) => {
   return (
     <div className="list">
-      {listData.map((item, index) => (
-        <Card key={item.id} item={item} />
+      {posts.map((item, index) => (
+        <Card key={item._id} item={item} />
       ))}
     </div>
   );

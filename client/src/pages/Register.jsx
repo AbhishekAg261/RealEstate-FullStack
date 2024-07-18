@@ -56,6 +56,7 @@ const Register = () => {
           <h1>Create an Account</h1>
           <input
             value={register.username}
+            required
             onChange={handleInput}
             name="username"
             type="text"
@@ -63,12 +64,14 @@ const Register = () => {
           />
           <input
             value={register.email}
+            required
             onChange={handleInput}
             name="email"
             type="text"
             placeholder="Email"
           />
           <input
+            required
             value={register.password}
             onChange={handleInput}
             name="password"

@@ -27,7 +27,6 @@ const getPosts = async (req, res) => {
       queryObject.price = { $lte: maxPrice };
     }
     const posts = await Post.find(queryObject);
-    console.log(posts);
     return res.status(200).json(posts);
   } catch (err) {
     console.log(err);

@@ -1,6 +1,8 @@
 const User = require("../models/user-model");
 const SavedPost = require("../models/saved-post");
 const bcrypt = require("bcrypt");
+const Post = require("../models/post-model");
+const Contact = require("../models/contact-model");
 
 //not used
 const getUsers = async (req, res) => {
@@ -79,9 +81,6 @@ const deleteUser = async (req, res) => {
 const savePost = async (req, res) => {
   const postId = req.body.postId;
   const tokenUserId = req.userId;
-  console.log(postId);
-  console.log(tokenUserId);
-
   try {
     const savedPost = await SavedPost.findOne({
       userId: tokenUserId,
@@ -104,4 +103,46 @@ const savePost = async (req, res) => {
   }
 };
 
-module.exports = { getUsers, getUser, updateuser, deleteUser, savePost };
+const profilePosts = async (req, res) => {
+  const tokenUserId = req.userId;
+  try {
+    const userPosts = await Post.find({ userId: tokenUserId });
+    const saved = await SavedPost.find({ userId: tokenUserId }).populate(
+      "postId"
+    );
+
+    const savedPosts = saved.map((item) => item.postId);
+    return res.status(200).json({ userPosts, savedPosts });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).send({ message: "Not Authorized" });
+  }
+};
+
+const userContact = async (req, res) => {
+  const tokenUserId = req.userId;
+  const { username, email, desc } = req.body;
+
+  try {
+    const newContact = await Contact.create({
+      username,
+      email,
+      desc,
+      userId: tokenUserId,
+    });
+    return res.status(201).json({ message: "User created successfully" });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).send({ message: "Not Authorized" });
+  }
+};
+
+module.exports = {
+  getUsers,
+  getUser,
+  updateuser,
+  deleteUser,
+  savePost,
+  profilePosts,
+  userContact,
+};

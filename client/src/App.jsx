@@ -8,7 +8,7 @@ import Register from "./pages/Register";
 import Login from "./pages/Login";
 import ProfileUpdate from "./pages/ProfileUpdate";
 import NewPostPage from "./pages/NewPostPage";
-import Error from "./pages/Error";
+import Contact from "./pages/Contact";
 
 function App() {
   const router = createBrowserRouter([
@@ -53,6 +53,11 @@ function App() {
         {
           path: "/add",
           element: <NewPostPage />,
+        },
+
+        {
+          path: "/contact",
+          element: <Contact />,
         },
       ],
     },

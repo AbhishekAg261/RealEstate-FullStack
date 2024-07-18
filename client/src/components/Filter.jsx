@@ -38,8 +38,7 @@ const Filter = ({ handleFilterData }) => {
           bedroom: query.bedroom,
         },
       });
-      console.log("test 1 done");
-      console.log(response.data);
+
       handleFilterData(response.data);
     } catch (error) {
       console.error("Error fetching posts:", error);

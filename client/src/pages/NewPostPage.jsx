@@ -4,13 +4,10 @@ import UploadWidget from "../components/UploadWidget";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-import { AuthContext } from "../store/AuthContext";
-
 const NewPostPage = () => {
   const [images, setImages] = useState([]);
   const [error, setError] = useState("");
   const [desc, setDesc] = useState("");
-  const { setUserPost } = useContext(AuthContext);
 
   const navigate = useNavigate();
 

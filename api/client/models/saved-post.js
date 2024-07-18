@@ -7,7 +7,7 @@ const savedPostSchema = new mongoose.Schema({
   },
   postId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Post",
+    ref: "POST",
   },
   createdAt: { type: Date, default: Date.now() },
 });
